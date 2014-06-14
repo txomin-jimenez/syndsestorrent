@@ -3,41 +3,72 @@
 class SynoFileHostingNewPct {
 
     private $Url;
-    private $Username;
+    // Ya no se requiere para NewPct1.com
+    /*private $Username;
     private $Password;
     private $HostInfo;
-    private $NEWPCT_COOKIE = '/tmp/newpct1.cookie';
-    private $NEWPCT_LOGIN_URL = 'http://www.newpct1.com/doLoginFx/';
+    private $NEWPCT_LOGIN_URL = 'http://www.newpct1.com/doLoginFx/';*/
+    private $NEWPCT_COOKIE = '/tmp/newpct1.cookie';    
     private $NEWPCT_DOWNLOAD_URL = 'http://www.tumejorjuego.com/descargar/index.php?link=descargar/torrent/%s/%s.html';
 
+    /**
+     * 
+     * @param string $Url URL a descargar (no el fichero directo)
+     * @param string $Username Usuario
+     * @param string $Password Contraseña
+     * @param array $HostInfo Información del host
+     * @link http://ukdl.synology.com/download/ds/userguide/Developer_Guide_to_File_Hosting_Module.pdf
+     */
     public function __construct($Url, $Username, $Password, $HostInfo) {
         $this->Url = $Url;
-        $this->Username = $Username;
-        $this->Password = $Password;
-        $this->HostInfo = $HostInfo;
+        // Ya no se requiere para NewPct1.com
+        /* $this->Username = $Username;
+          $this->Password = $Password;
+          $this->HostInfo = $HostInfo; */
     }
-
+    
+    /**
+     * 
+     * @return string URL de la descarga
+     * @link http://ukdl.synology.com/download/ds/userguide/Developer_Guide_to_File_Hosting_Module.pdf
+     */
     public function GetDownloadInfo() {
-        $ret = FALSE;
-        $VerifyRet = $this->Verify(FALSE);
-        if ($VerifyRet) {
-            $DownloadInfo = array();
+        // Ya no se requiere para NewPct1.com
+        /* $ret = FALSE;
+          $VerifyRet = $this->Verify(FALSE);
+          if ($VerifyRet) {
+          $DownloadInfo = array();
 
-            // We check if the download link is for RSS
-            if (strrpos($this->Url, '/torrent/') === FALSE) {
-                $DownloadInfo[DOWNLOAD_URL] = $this->getTorrentUrl();
-            } else {
-                $DownloadInfo[DOWNLOAD_URL] = trim($this->Url);
-            }
+          // We check if the download link is for RSS
+          if (strrpos($this->Url, '/torrent/') === FALSE) {
+          $DownloadInfo[DOWNLOAD_URL] = $this->getTorrentUrl();
+          } else {
+          $DownloadInfo[DOWNLOAD_URL] = trim($this->Url);
+          }
 
-            $DownloadInfo[DOWNLOAD_COOKIE] = $this->NEWPCT_COOKIE;
-            $ret = $DownloadInfo;
+          $DownloadInfo[DOWNLOAD_COOKIE] = $this->NEWPCT_COOKIE;
+          $ret = $DownloadInfo;
+          }
+          return $ret; */
+        if (strrpos($this->Url, '/torrent/') === FALSE) {
+            $DownloadInfo[DOWNLOAD_URL] = $this->getTorrentUrl();
+        } else {
+            $DownloadInfo[DOWNLOAD_URL] = trim($this->Url);
         }
+        $DownloadInfo[DOWNLOAD_COOKIE] = $this->NEWPCT_COOKIE;
+        $ret = $DownloadInfo;
         return $ret;
     }
-
+    
+    /**
+     * 
+     * @param type $ClearCookie Si se elimina la cookie (no se utiliza)
+     * @return string tipo de usuario
+     */
     public function Verify($ClearCookie) {
-        $ret = LOGIN_FAIL;
+        return USER_IS_FREE;
+        // Ya no se requiere para NewPct1.com
+        /*$ret = LOGIN_FAIL;
 
         $this->CookieValue = FALSE;
         if (!empty($this->Username) && !empty($this->Password)) {
@@ -51,10 +82,11 @@ class SynoFileHostingNewPct {
         if ($ClearCookie && file_exists($this->NEWPCT_COOKIE)) {
             unlink($this->NEWPCT_COOKIE);
         }
-        return $ret;
+        return $ret;*/
     }
 
-    private function newPctLogin() {
+    // No hace falta logearse para descargar de NewPct1.com
+    /*private function newPctLogin() {
         $ret = FALSE;
         //Save cookie file
         $PostData = array(
@@ -87,10 +119,15 @@ class SynoFileHostingNewPct {
             }
         }
         return $ret;
-    }
+    }*/
 
+    /**
+     * 
+     * @return string Devuelve la url dependiendo si proviene del RSS
+     * o de la búsqueda
+     */
     private function getTorrentUrl() {
-        if (strstr($this->url, "newpct.com") !== FALSE){
+        if (strstr($this->url, "newpct.com") !== FALSE) {
             return "";
         }
         $curl = curl_init();
@@ -100,7 +137,7 @@ class SynoFileHostingNewPct {
         curl_setopt($curl, CURLOPT_HEADER, TRUE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_URL, $this->Url);
-            
+
         $dlPage = curl_exec($curl);
 
         $regexp_title = '<meta property="og:image" content="(.*).jpg"';

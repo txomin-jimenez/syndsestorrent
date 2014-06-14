@@ -5,29 +5,32 @@ class SynoDLMSearchNewPct {
     private $qurl = 'http://www.newpct1.com/buscar-descargas/';
     private $purl = 'http://www.newpct1.com/';
 
-    public function __construct() {
-        
+    public function __construct() {  
     }
-
+    
+    /**
+     * 
+     * @param curl $curl objeto curl
+     * @param string $query cadena a buscar
+     */
     public function prepare($curl, $query) {
         $fields = array(
             'cID' => 0,
             'tLang' => 0,
             'oBy' => 0,
             'oMode' => 0,
-            //'q' => urlencode(utf8_decode($query)),
+            // Transformamos el texto por el tema de accentos, etc..
             'q' => urlencode(iconv('UTF-8', 'ISO-8859-1', $query)),
             'doSearch.x' => 0,
             'doSearch.y' => 0
         );
-
         $fields_string = '';
-
+        
         foreach ($fields as $key => $value) {
             $fields_string .= $key . '=' . $value . '&';
-        } rtrim($fields_string, '&');
+        } 
         
-        //curl_setopt($curl, CURLOPT_VERBOSE, true);
+        rtrim($fields_string, '&');        
         curl_setopt($curl, CURLOPT_COOKIE, "language=es_ES");
         curl_setopt($curl, CURLOPT_FAILONERROR, 1);
         curl_setopt($curl, CURLOPT_REFERER, $this->purl);
@@ -39,9 +42,13 @@ class SynoDLMSearchNewPct {
         curl_setopt($curl, CURLOPT_POST, count($fields));
         curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
     }
-
+    /**
+     * 
+     * @param plugin $plugin contendrá los resultados ya extraídos de la página
+     * @param string $response respuesta html de la página
+     * @return int número de resultados
+     */
     public function parse($plugin, $response) {
-        //die($response);
         $regexp_main = "<div id=\"categoryList\".*>(.*)<\/div>";
         $regexp_tabla = "<tbody>(.*)<td class=\"center tdpagination\"";
         $regexp_fila = "<tr>(.*)<\/tr>";
@@ -55,11 +62,8 @@ class SynoDLMSearchNewPct {
         $res = 0;
 
         if (preg_match_all("/$regexp_main/siU", $response, $matches2, PREG_SET_ORDER)) {
-            //print_r($matches2);
             if (preg_match_all("/$regexp_tabla/siU", $matches2[0][0], $matches3, PREG_SET_ORDER)) {
-                //print_r($matches3);
                 if (preg_match_all("/$regexp_fila/siU", $matches3[0][0], $matches4, PREG_SET_ORDER)) {
-                    //print_r($matches4);
                     foreach ($matches4 as $fila) {
                         if (preg_match_all("/$regexp_celda/si", $fila[1], $matches5)) {
                             for ($i = 1; isset($matches5[$i][1]); $i += 2) {
@@ -103,7 +107,6 @@ class SynoDLMSearchNewPct {
                                 // HASH
                                 $hash = md5($titulo);
                                 $plugin->addResult(iconv('ISO-8859-1', 'UTF-8', $titulo), $enlace_descarga, $tamano, $fecha, $enlace_pagina, $hash, -1, -1, "Sin clasificar");
-                                //$plugin->addResult(utf8_encode($titulo), $enlace_descarga, $tamano, $fecha, $enlace_pagina, $hash, -1, -1, "Sin clasificar");
                             }
                         }
                         $res++;
