@@ -1,0 +1,10 @@
+{
+"name": "eliteTorrentNetRedir",
+"hostprefix": "elitetorrent.net",
+"displayname": "elitetorrent.net",
+"version": "1.0.0",
+"authentication": "no",
+"module": "host.php",
+"class": "SynoFileHostingEliteTorrentNet",
+"description": "Web para descargas torrents, estrenos, peliculas, series, juegos y mucho más totalmente libre y gratuito. Hecho por Luskaner" 
+}

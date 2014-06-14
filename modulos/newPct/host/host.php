@@ -127,7 +127,7 @@ class SynoFileHostingNewPct {
      * o de la búsqueda
      */
     private function getTorrentUrl() {
-        if (strstr($this->url, "newpct.com") !== FALSE) {
+        if (strstr($this->Url, "newpct.com") !== FALSE) {
             return "";
         }
         $curl = curl_init();

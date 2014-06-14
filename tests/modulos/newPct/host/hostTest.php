@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '\..\..\..\newPct\host\host.php';
+require_once dirname(__FILE__) . '/../../../../modulos/newPct/host/host.php';
 // Constants required by host.php
 define('LOGIN_FAIL', 1);
 define('USER_IS_FREE', 2);
