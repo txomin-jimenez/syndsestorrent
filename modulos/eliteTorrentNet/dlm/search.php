@@ -80,7 +80,7 @@ class SynoDLMSearchEliteTorrentNet {
         $fecha_split = explode(' ', $fecha_str);
         $cantidad = $fecha_split[1];
 
-        if ($cantidad == 'un') {
+        if ($cantidad == 'un' || $cantidad == 'una') {
             $cantidad = '1';
         }
 
@@ -91,9 +91,12 @@ class SynoDLMSearchEliteTorrentNet {
             'months', 'year', 'years');
         $tipo_trad = str_replace($tipos_es, $tipos_en, $tipo);
         
-        if ($tipo_trad == 'week' && $cantidad > 1){
+        if ($tipo == 'week' && $cantidad > 1){
             $tipo_trad .= 's';
-        }       
+        } else if ($tipo_trad == "monthes"){
+            $tipo_trad = "months";
+        }
+
         return date('Y-m-d H:i:s', strtotime("-$cantidad $tipo_trad"));
     }
     

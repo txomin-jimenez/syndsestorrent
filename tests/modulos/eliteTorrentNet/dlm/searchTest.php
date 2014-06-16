@@ -37,7 +37,7 @@ class SynoDLMSearchEliteTorrentNetTest extends PHPUnit_Framework_TestCase {
     public function testParse() {
         $plugin = new plugin();
         $curl = curl_init();
-        $query = "hola";
+        $query = "orange";
         $this->object->prepare($curl, $query);
         $data = curl_exec($curl);
         $this->assertGreaterThan(0, $this->object->parse($plugin, $data), "No hay resultados");
