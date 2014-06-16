@@ -15,7 +15,13 @@ class SynoFileHostingEliteTorrentNet {
     
     public function GetDownloadInfo() {
         $DownloadInfo = array();
-        $DownloadInfo[DOWNLOAD_URL] = $this->getTorrentId($this->url);
+        
+        if (strrpos($this->url, '/get-torrent/') === FALSE) {
+            $DownloadInfo[DOWNLOAD_URL] = $this->getTorrentId($this->url);
+        } else {
+            $DownloadInfo[DOWNLOAD_URL] = $this->url;
+        }
+        
         $DownloadInfo[DOWNLOAD_COOKIE] = "/tmp/elitetorrentnet.cookie";
         return $DownloadInfo;
     }
