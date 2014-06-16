@@ -1,0 +1,17 @@
+CÓMO INSTALAR
+-------------
+
+1. Descomprimir el fichero zip
+2. Iniciar Download Station
+3. Ir a la configuración (engranaje)
+4. Ir a Búsqueda en BT
+5. Agregar -> seleccionamos eliteTorretNet.dlm -> Agregar
+6. Ir a Alojamiento de archivos
+7. Agregar -> seleccionamos eliteTorrentNet.host -> Agregar
+
+LIMITACIONES
+------------
+- Solo se carga la primera página de resultados (dlm)
+- La fecha es aproximada (dlm)
+- No se muestra el tamaño, y la fecha exacta ya que requeriría ir a la página
+  de cada torrent (dlm)
