@@ -1,0 +1,10 @@
+{
+"name": "animeIndexOrgHost",
+"hostprefix": "anime-index.org",
+"displayname": "Anime-Index",
+"version": "1.0.0",
+"authentication": "no",
+"module": "host.php",
+"class": "SynoFileHostingAnimeIndex",
+"description": "Sitio de Torrents de anime. Hecho por malkavi. Modificado por luskaner"
+}

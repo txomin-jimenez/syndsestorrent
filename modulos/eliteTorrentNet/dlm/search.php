@@ -1,5 +1,5 @@
 <?php
-use DateTime;
+
 class SynoDLMSearchEliteTorrentNet {
 
     private $qurl = 'http://www.elitetorrent.net/busqueda/%s/modo:listado';

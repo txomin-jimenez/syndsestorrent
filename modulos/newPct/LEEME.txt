@@ -8,6 +8,16 @@ CÓMO INSTALAR
 5. Agregar -> seleccionamos NewPCT.dlm -> Agregar
 6. Ir a Alojamiento de archivos
 7. Agregar -> seleccionamos NewPCT.host -> Agregar
+8. Ir a Canales RSS
+9. Hacer clic en el símbolo +
+10. En "Escribir URL de RSS" introducimos: http://feeds2.feedburner.com/newpctorrent
+
+DESCARGA AUTOMÁTICA
+-------------------
+1. Ir a Filtro de descarga -> Agregar
+2. En coincidencias agregamos, por ejemplo:
+    *lo_que_queramos_buscar*
+    *primera_parte*segunda_parte*
 
 CAMBIOS
 -------
