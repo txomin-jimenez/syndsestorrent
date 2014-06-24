@@ -139,16 +139,11 @@ class SynoFileHostingNewPct {
         curl_setopt($curl, CURLOPT_URL, $this->Url);
 
         $dlPage = curl_exec($curl);
-
-        $regexp_title = '<meta property="og:image" content="(.*).jpg"';
-        $regexp_id = "'torrentID': '(.*)'";
-
-        if (preg_match_all("/$regexp_title/siU", $dlPage, $matches_title, PREG_SET_ORDER)) {
-            $title = substr($matches_title[0][1], strrpos($matches_title[0][1], '/') + 1);
-            if (preg_match_all("/$regexp_id/", $dlPage, $matches_id, PREG_SET_ORDER)) {
-                $id = $matches_id[0][1];
-                return sprintf($this->NEWPCT_DOWNLOAD_URL, $id, $title);
-            }
+        $regexp_url = "<a.+href='(.*tumejorjuego.*)'";
+        
+        $matches_url = array();
+        if (preg_match("/$regexp_url/iU", $dlPage, $matches_url)) {
+            return $matches_url[1];
         }
         return "";
     }
