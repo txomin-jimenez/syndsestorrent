@@ -8,8 +8,8 @@ class plugin {
          * 
          * @param string $title título del resultado
          * @param string $download URL de descarga
-         * @param int $size tamaño en bytes
-         * @param string $datetime fecha en formato yyyy-mm-dd
+         * @param int $size tamaño en bytes, si no se sabe -> 0
+         * @param string $datetime fecha en formato yyyy-mm-dd hh:mm
          * @param string $page URL de la página
          * @param string $hash hash de la descarga
          * @param int $seeds número de semillas, si no se sabe -> -1

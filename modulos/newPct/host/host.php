@@ -9,7 +9,6 @@ class SynoFileHostingNewPct {
     private $HostInfo;
     private $NEWPCT_LOGIN_URL = 'http://www.newpct1.com/doLoginFx/';*/
     private $NEWPCT_COOKIE = '/tmp/newpct1.cookie';    
-    private $NEWPCT_DOWNLOAD_URL = 'http://www.tumejorjuego.com/descargar/index.php?link=descargar/torrent/%s/%s.html';
 
     /**
      * 

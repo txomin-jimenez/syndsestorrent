@@ -1,0 +1,29 @@
+﻿CÓMO INSTALAR
+-------------
+
+1. Descomprimir el fichero zip
+2. Iniciar Download Station
+3. Ir a la configuración (engranaje)
+4. Ir a Búsqueda en BT
+5. Agregar -> seleccionamos divxatope.dlm -> Agregar
+6. Ir a Alojamiento de archivos
+7. Agregar -> seleccionamos divxatope.host -> Agregar
+8. Ir a Canales RSS
+9. Hacer clic en el símbolo +
+10. En "Escribir URL de RSS" introducimos: http://www.divxatope.com/feeds.xml
+
+DESCARGA AUTOMÁTICA
+-------------------
+1. Ir a Filtro de descarga -> Agregar
+2. En coincidencias agregamos, por ejemplo:
+    *lo_que_queramos_buscar*
+    *primera_parte*segunda_parte*
+
+CAMBIOS
+-------
+DLM 1.0/HOST 1.0 Versión inicial
+
+LIMITACIONES
+------------
+Para el correcto funcionamiento del módulo de búsqueda se requiere tener
+instalado el módulo de alojamiento.
