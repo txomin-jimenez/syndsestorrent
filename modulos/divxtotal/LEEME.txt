@@ -5,12 +5,12 @@ CÓMO INSTALAR
 2. Iniciar Download Station
 3. Ir a la configuración (engranaje)
 4. Ir a Búsqueda en BT
-5. Agregar -> seleccionamos eliteTorrentNet.dlm -> Agregar
+5. Agregar -> seleccionamos divxtotal.dlm -> Agregar
 6. Ir a Alojamiento de archivos
-7. Agregar -> seleccionamos eliteTorrentNet.host -> Agregar
+7. Agregar -> seleccionamos divxtotal.host -> Agregar
 8. Ir a Canales RSS
 9. Hacer clic en el símbolo +
-10. En "Escribir URL de RSS" introducimos: http://www.elitetorrent.net/rss.php
+10. En "Escribir URL de RSS" introducimos: http://www.divxtotal.com/rss.php
 
 DESCARGA AUTOMÁTICA
 -------------------
@@ -21,7 +21,5 @@ DESCARGA AUTOMÁTICA
 
 LIMITACIONES
 ------------
-- Solo se carga la primera página de resultados (dlm)
-- La fecha es aproximada (dlm)
-- No se muestra el tamaño, y la fecha exacta ya que requeriría ir a la página
-  de cada torrent (dlm)
+- Solo se carga la primera página de 20 resultados (dlm)
+- No se muestra los clientes ni los usuarios de cada torrent (dlm)
