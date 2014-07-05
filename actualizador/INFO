@@ -1,0 +1,8 @@
+package="Actualizador automático de SynDsEsTorrent"
+version="1.0.0"
+description="Actualiza automáticamente los módulos de Download Station instalados de SynDsEsTorrent"
+support_url="https://syndsestorrent.codeplex.com/workitem/list/basic"
+maintainer="Luskaner"
+maintaner_url="https://syndsestorrent.codeplex.com"
+startable="yes"
+helpurl="https://syndsestorrent.codeplex.com/wikipage?title=usuarios&referringTitle=Documentation"
