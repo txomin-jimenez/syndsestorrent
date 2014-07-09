@@ -4,5 +4,5 @@ description="Actualiza automáticamente los módulos de Download Station instala
 support_url="https://syndsestorrent.codeplex.com/workitem/list/basic"
 maintainer="Luskaner"
 maintaner_url="https://syndsestorrent.codeplex.com"
-startable="yes"
 helpurl="https://syndsestorrent.codeplex.com/wikipage?title=usuarios&referringTitle=Documentation"
+instuninst_restart_services="cron"
