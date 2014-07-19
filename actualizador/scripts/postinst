@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo -e "@hourly\troot\tphp ${SYNOPKG_PKGDEST}/codigo/syndsestorrent_actualizador.php > ${SYNOPKG_PKGDEST}/log.txt 2>&1" >> /etc/crontab
