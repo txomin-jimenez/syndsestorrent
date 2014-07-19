@@ -25,18 +25,21 @@ import glob
 import json
 import zipfile
 
+def borrar_contenido_carpeta(carpeta):
+    if os.path.exists(carpeta):
+        files = glob.glob(os.path.join(carpeta, '*'))
+        for f in files:
+            os.remove(f)
+    else:
+        os.makedirs(carpeta)  
+        
 if __name__ == "__main__":
     print 'Empaquetando los ficheros DLM y HOST...'
     print '---------------------------------------'
     os.system("python empaquetar_modulo.py")
     ruta_lanz = os.path.join('..', 'lanzamiento')
     
-    if os.path.exists(ruta_lanz):
-        files = glob.glob(os.path.join(ruta_lanz, '*'))
-        for f in files:
-            os.remove(f)
-    else:
-        os.makedirs(ruta_lanz)    
+    borrar_contenido_carpeta(ruta_lanz)
     
     print 'Creando los ficheros ZIP...'
     print '---------------------------'

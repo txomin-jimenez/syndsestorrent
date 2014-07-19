@@ -41,7 +41,7 @@ def obt_ruta_base(addon):
     return os.path.join('..', 'modulos', addon)
 
 def obt_ruta_paq(addon, tipo):
-    return os.path.join(obt_ruta_base(addon), tipo, "modulo", addon + '.tar')
+    return os.path.join(obt_ruta_base(addon), tipo, "lanzamiento", addon + '.tar')
 
 def obt_ruta_fic(addon, tipo):   
     fichero_info = ''
@@ -73,7 +73,7 @@ def construir(addon, tipo):
         return
     
     paq_tar = obt_ruta_paq(addon, tipo) 
-    ruta_mod_paq = os.path.join(ruta_mod, "modulo")
+    ruta_mod_paq = os.path.join(ruta_mod, "lanzamiento")
 
     if not os.path.isdir(ruta_mod_paq):
         os.makedirs(ruta_mod_paq)

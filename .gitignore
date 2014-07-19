@@ -1,5 +1,5 @@
-modulo/
 lanzamiento/
 *.host
 *.dlm
 *.zip
+*.pyc
