@@ -24,11 +24,22 @@ __date__ ="$15-jul-2014 3:10:46$"
 
 ruta_base = os.path.join('..', 'actualizador')
 ruta_lanz = os.path.join(ruta_base, 'lanzamiento')
-    
+ruta_pq_b = os.path.join(ruta_lanz, 'package.tgz')
+ruta_ico = os.path.join(ruta_base, 'PACKAGE_ICON.PNG')
+ruta_256 = os.path.join(ruta_base, 'PACKAGE_ICON_256.PNG')
+ruta_inf = os.path.join(ruta_base, 'INFO')
+ruta_lic = os.path.join(ruta_base, 'LICENSE')
+ruta_scr = os.path.join(ruta_base, 'scripts')
+
 def construir_paq_base():
-    construir_tar_gz(os.path.join(ruta_lanz, 'package.tgz'), 
-                     os.path.join(ruta_base, 'codigo'))
+    construir_tar_gz(ruta_pq_b, os.path.join(ruta_base, 'codigo'))
+    
+def construir_paq():
+    construir_paq_base()
+    construir_tar_gz(os.path.join(ruta_lanz, 'synDsEsTorrent actualizador.spk'), 
+                    ruta_pq_b, ruta_ico, ruta_256, ruta_inf, ruta_lic, ruta_scr)
     
 if __name__ == "__main__":
     borrar_contenido_carpeta(ruta_lanz)
-    construir_paq_base()
+    construir_paq()
+    os.remove(ruta_pq_b)
