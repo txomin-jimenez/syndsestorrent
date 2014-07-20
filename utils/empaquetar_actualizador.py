@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import ConfigParser
 import os.path
 import tarfile
 from empaquetar_lanzamiento import borrar_contenido_carpeta
@@ -54,7 +55,10 @@ def construir_paq_base():
     
 def construir_paq():
     construir_paq_base()
-    construir_tar_gz(os.path.join(ruta_lanz, 'synDsEsTorrent actualizador.spk'), 
+    config = ConfigParser.RawConfigParser()
+    config.read(os.path.join(ruta_base, 'INFO'))
+    version = str(config.get('main', 'version')).translate(None, '"')
+    construir_tar_gz(os.path.join(ruta_lanz, 'synDsEsTorrent actualizador ' + version + ' Beta.spk'), 
                     ruta_pq_b, ruta_ico, ruta_256, ruta_inf, ruta_lic, ruta_scr)
     
 if __name__ == "__main__":

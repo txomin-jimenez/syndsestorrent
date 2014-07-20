@@ -20,42 +20,53 @@ if (preg_match("/\"changesetId\":\"(.*)\"/i", $htmlPagDescarga, $idCambio)) {
                     $modulos = glob($ficheroTemp . '/modulos/*', GLOB_ONLYDIR);
                     foreach ($modulos as $modulo) {
                         if (is_dir($modulo . '/host')){
-                            $info = json_decode(utf8_encode(file_get_contents($modulo . '/host/INFO')), true);
+                            $info = json_decode(utf8_encode(file_get_contents($modulo . '/host/INFO')), true);                            
                             if (is_dir($RUTA_HOST . $info['name'])){
-                                echo "Copiar de $modulo/host/INFO a $RUTA_HOST{$info['name']}/INFO<br/>";
-                                copy($modulo . '/host/INFO', $RUTA_HOST . $info['name'] . '/INFO');
-                                echo "Copiar de $modulo/host/{$info['module']} a $RUTA_HOST{$info['name']}/{$info['module']}<br/>";
-                                copy($modulo . '/host/' . $info['module'], $RUTA_HOST . $info['name'] . '/' . $info['module']);
+                                $info_ins = json_decode(utf8_encode(file_get_contents($RUTA_HOST . $info['name'] . '/INFO')), true);
+                                if ($info['version'] != $info_ins['version']){
+                                    echo @date("d/m/Y H:i:s") . " Copiar de $modulo/host/INFO a $RUTA_HOST{$info['name']}/INFO\n";
+                                    copy($modulo . '/host/INFO', $RUTA_HOST . $info['name'] . '/INFO');
+                                    echo @date("d/m/Y H:i:s") . " Copiar de $modulo/host/{$info['module']} a $RUTA_HOST{$info['name']}/{$info['module']}\n";
+                                    copy($modulo . '/host/' . $info['module'], $RUTA_HOST . $info['name'] . '/' . $info['module']);
+                                } else {
+                                    echo @date("d/m/Y H:i:s") . " Modulo host de $modulo ya esta en su ultima version\n";
+                                }
                             }
                         }
                         if (is_dir($modulo . '/dlm')){
                             $info = json_decode(utf8_encode(file_get_contents($modulo . '/dlm/INFO')), true);
+                            
                             if (is_dir($RUTA_HOST . $info['name'])){
-                                echo "Copiar de $modulo/dlm/INFO a $RUTA_DLM{$info['name']}/INFO<br/>";
-                                copy($modulo . '/dlm/INFO', $RUTA_DLM . $info['name'] . '/INFO');
-                                echo "Copiar de $modulo/dlm/{$info['module']} a $RUTA_DLM{$info['name']}/{$info['module']}<br/>";
-                                copy($modulo . '/dlm/' . $info['module'], $RUTA_DLM . $info['name'] . '/' . $info['module']);
+                                $info_ins = json_decode(utf8_encode(file_get_contents($RUTA_DLM . $info['name'] . '/INFO')), true);
+                                if ($info['version'] != $info_ins['version']){
+                                    echo @date("d/m/Y H:i:s") . " Copiar de $modulo/dlm/INFO a $RUTA_DLM{$info['name']}/INFO\n";
+                                    copy($modulo . '/dlm/INFO', $RUTA_DLM . $info['name'] . '/INFO');
+                                    echo @date("d/m/Y H:i:s") . " Copiar de $modulo/dlm/{$info['module']} a $RUTA_DLM{$info['name']}/{$info['module']}\n";
+                                    copy($modulo . '/dlm/' . $info['module'], $RUTA_DLM . $info['name'] . '/' . $info['module']);
+                                } else {
+                                    echo @date("d/m/Y H:i:s") . " Modulo dlm de $modulo ya esta en su ultima version\n";
+                                }
                             }
                         }
                     }
                 } else {
-                    echo 'No se ha podido descomprimir el codigo fuente';
+                    echo @date("d/m/Y H:i:s") . ' No se ha podido descomprimir el codigo fuente\n';
                 }
                 foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($ficheroTemp, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST) as $path) {
                     $path->isDir() ? rmdir($path->getPathname()) : unlink($path->getPathname());
                 }
                 rmdir($ficheroTemp);
             } else {
-                echo 'No se ha podido crear el directorio temporal';
+                echo @date("d/m/Y H:i:s") . ' No se ha podido crear el directorio temporal\n';
             }
         } else {
-            echo 'No se ha podido cambiar el fichero temporal a directorio';
+            echo @date("d/m/Y H:i:s") . ' No se ha podido cambiar el fichero temporal a directorio\n';
         }
         $zip->close();
     } else {
-        echo 'No se ha podido abrir el fichero zip';
+        echo @date("d/m/Y H:i:s") . ' No se ha podido abrir el fichero zip\n';
     }
     unlink($ruta_zip);
 } else {
-    echo 'No se ha podido encontrar la id de descarga';
+    echo @date("d/m/Y H:i:s") . ' No se ha podido encontrar la id de descarga\n';
 }

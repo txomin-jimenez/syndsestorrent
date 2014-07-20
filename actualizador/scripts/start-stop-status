@@ -1,3 +1,10 @@
 #!/bin/sh
 
-exit 0
+case "$1" in
+    status)
+        exit 0
+        ;;
+    log)
+        echo ${SYNOPKG_PKGDEST}/log.txt
+        ;;
+esac
