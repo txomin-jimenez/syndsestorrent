@@ -1,0 +1,10 @@
+{
+"name": "divxTotalDlm",
+"displayname": "DivXTotal",
+"description": "DivxTotaL.com - Peliculas - Series -Musica y mucho mas. Hecho por Luskaner",
+"version": "1.0.0",
+"site": "http://www.divxtotal.com",
+"module": "search.php",
+"type": "search",
+"class": "SynoDLMSearchDivxTotal"
+}

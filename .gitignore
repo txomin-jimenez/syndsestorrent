@@ -1,5 +1,11 @@
+# Carpeta que contiene el paquete final de los host, dlm, spk y zip
 lanzamiento/
+# Modulos de Synology Download Station
 *.host
 *.dlm
+# Lanzamiento final de cada proveedor de addons
 *.zip
+# Paquete de Synology
+*.spk
+# Python compilado
 *.pyc
