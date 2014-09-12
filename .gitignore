@@ -1,5 +1,7 @@
 # Carpeta que contiene el paquete final de los host, dlm, spk y zip
-lanzamiento/
+release/
+basePackage/
+updater/
 # Modulos de Synology Download Station
 *.host
 *.dlm

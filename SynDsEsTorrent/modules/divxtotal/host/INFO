@@ -1,0 +1,10 @@
+{
+"name": "divxTotal",
+"hostprefix": "divxtotal.com,www.divxtotal.com",
+"displayname": "DivXTotal",
+"version": "1.0.0",
+"authentication": "no",
+"module": "SynoFileHostingDivxTotal.php",
+"class": "SynoFileHostingDivxTotal",
+"description": "Peliculas - Series - Musica y mucho mas. Hecho por Luskaner" 
+}
