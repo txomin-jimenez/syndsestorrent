@@ -23,3 +23,4 @@ CAMBIOS
 -------
 HOST 0.1.1 Versión Inicial desarrollado por malkavi
 DLM 1.0.0/HOST 1.0.0 Agregado el DLM y ajustado el HOST
+DLM 1.0.1/HOST 1.0.0 Arreglado un error que podía ocurrir al buscar

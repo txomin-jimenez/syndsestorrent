@@ -31,3 +31,5 @@ DLM 1.1.3/HOST 1.2.3 Cambio de host de www.newpct.com a www.newpct1.com
 DLM 1.1.3/HOST 1.2.4 Los enlaces del RSS a newpct.com darán error sin bajarse nada
 DLM 1.1.3/HOST 1.2.5 Eliminada la autenticación que ya no es necesaria, aumentando el rendimiento
 DLM 1.1.3/HOST 1.2.6 Ajustado el host debido a un cambio de la página web
+DLM 1.1.4/HOST 1.2.7 Ajustado ambos módulos debido a un cambio de la página web
+DLM 1.1.5/HOST 1.2.7 Ajustado el módulo de búsqueda para que muestre hasta 300 resultados (10 páginas) y corregido un error que provocaba resultados incorrectos

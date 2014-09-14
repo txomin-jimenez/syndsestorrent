@@ -61,13 +61,15 @@ class SynoDLMSearchAnimeIndex {
     }
     
     private function procesarMultiple($fila){
-        $resInfo = $this->regexp("<a.*href=\"(.*)\".*>(.*)<\/a>", $fila, true);
+        $resInfo = $this->regexp("<td.*>(.*)<\/td>", $fila, true);
+        $res_url_Pagina = $this->regexp('<a.*href="(.*)".*>', $resInfo[1][1]);
+        $res_url_Descarga = $this->regexp('<a.*href="(.*)".*>', $resInfo[2][1]);
         $info = array(
-            'urlPagina'     => $this->purl . html_entity_decode($resInfo[1][1]),
-            'titulo'        => $resInfo[1][2],            
-            'urlDescarga'   => $this->purl . html_entity_decode($resInfo[2][1]),
-            'semillas'      => $resInfo[3][2],
-            'clientes'      => $resInfo[4][2]
+            'urlPagina'     => $this->purl . html_entity_decode($res_url_Pagina[1]),
+            'titulo'        => strip_tags($resInfo[1][0]),            
+            'urlDescarga'   => $this->purl . html_entity_decode($res_url_Descarga[1]),
+            'semillas'      => strip_tags($resInfo[4][0]),
+            'clientes'      => strip_tags($resInfo[5][0])
         );
         return $info;
     }

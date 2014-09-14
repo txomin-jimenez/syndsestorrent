@@ -35,21 +35,35 @@ class SynoDLMSearchNewPct {
      */
     public function parse($plugin, $response) {
         $regex_resultados = '<ul.*class="buscar-list".*>(?<resultados>.*)<\/ul>';
-        $regex_info = '<li.*>.*<div.*class="info">.*<a.*href="(?<enlace_pagina>.*)".*<\/a>.*<h2.*>(?<titulo>.*)<\/h2>.*<span.*>(?<dia>\d+)-(?<mes>\d+)-(?<anyo>\d+)<\/span>.*<span.*>(?<tamanyo>\d+?(\.\d*?)??) (?<tipo_tamanyo>[KMGT]B).*<\/span>.*<\/div>.*<\/li>';
+        $regex_info = '<li.*>.*<div.*class="info">.*<a.*href="(?<enlace_pagina>.*)".*.*<h2.*>(?<titulo>.*)<\/h2>.*<\/a>.*<span.*>(?<dia>\d+)-(?<mes>\d+)-(?<anyo>\d+)<\/span>.*<span.*>(?<tamanyo>\d+?(\.\d*?)??) (?<tipo_tamanyo>[KMGT]B).*<\/span>.*<\/div>.*<\/li>';
 
-        $res = 0;
-        $resultados = $this->regexp($regex_resultados, $response);
-
-        if ($resultados !== '') {
-            $resultados_info = $this->regexp($regex_info, $resultados['resultados'], true);
-            if ($resultados_info !== '') {
-                $res = $this->procesarResultados($plugin, $resultados_info);
+        $pag_restantes = 10;
+        $num_res = 0;
+        do {
+            $resultados = $this->regexp($regex_resultados, $response);            
+            if ($resultados == '') {
+                return $num_res;
+            }             
+            $resultados_info = $this->regexp($regex_info, $resultados['resultados'], true);            
+            if ($resultados_info == '') {
+                return $num_res;
             }
-        }
-
-        return $res;
+            $pag_restantes--;
+            $num_res += $this->procesarResultados($plugin, $resultados_info);
+            $response = $this->obtenerSiguientePagina($response);  
+        } while ($pag_restantes > 0 && $response !== null);        
+        return $num_res;
     }
-    
+
+    private function obtenerSiguientePagina($html) {
+        $res = $this->regexp('<ul.*class="pagination".*>.*<a href="(?<enlace_pag_sig>[^>]*)">Next<\/a>.*<\/ul>', $html);
+        $ret = null;
+        if ($res !== '') {
+            $ret = file_get_contents($res['enlace_pag_sig']);
+        }      
+        return $ret;
+    }
+
     private function procesarResultados($plugin, $resultados) {
         $res = 0;
         foreach ($resultados as $resultado) {
