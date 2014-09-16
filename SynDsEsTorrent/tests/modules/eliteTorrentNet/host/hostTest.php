@@ -12,7 +12,7 @@ class SynoFileHostingEliteTorrentNetTest extends \SynDsEsTorrent\utils\BaseHostT
     }
    
     /**
-     * @covers SynoFileHostingNewPct::GetDownloadInfo
+     * @covers SynoFileHostingEliteTorrentNet::GetDownloadInfo
      */
     public function testGetDownloadInfo(){
         parent::GetDownloadInfo();

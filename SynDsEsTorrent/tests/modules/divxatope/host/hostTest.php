@@ -12,7 +12,7 @@ class SynoFileHostingDivxatopeTest extends \SynDsEsTorrent\utils\BaseHostTest {
     }
    
     /**
-     * @covers SynoFileHostingNewPct::GetDownloadInfo
+     * @covers SynoFileHostingDivxatope::GetDownloadInfo
      */
     public function testGetDownloadInfo(){
         parent::GetDownloadInfo();

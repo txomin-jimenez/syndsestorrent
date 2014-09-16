@@ -1,6 +1,6 @@
 <?php
 
-class SynoDLMSearchNewPct {
+class SynoDLMSearchNewPct1 {
 
     private $qurl = 'http://www.newpct1.com/buscar';
     private $purl = 'http://www.newpct1.com/';
@@ -72,7 +72,7 @@ class SynoDLMSearchNewPct {
             $hash = md5($titulo);
             $enlace_pagina = $resultado['enlace_pagina'];
             $tamano = $this->obtenerTamanyo($resultado['tamanyo'], $resultado['tipo_tamanyo']);
-            $plugin->addResult($titulo, $enlace_pagina, $tamano, $fecha, $enlace_pagina, $hash, -1, -1, "Sin clasificar");
+            $plugin->addResult($titulo, $enlace_pagina . '/dlm/', $tamano, $fecha, $enlace_pagina, $hash, -1, -1, "Sin clasificar");
             $res++;
         }
         return $res;

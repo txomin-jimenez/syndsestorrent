@@ -11,7 +11,7 @@ class SynoDLMSearchAnimeIndexTest extends \SynDsEsTorrent\utils\baseDlmTest {
         parent::setObject(new \SynoDLMSearchAnimeIndex);
     }
     /**
-     * @covers SynoDLMSearchNewPct::parse
+     * @covers SynoDLMSearchAnimeIndex::parse
      */
     public function testParse() {
        parent::parse();

@@ -11,7 +11,7 @@ class SynoDLMSearchDivxatopeTest extends \SynDsEsTorrent\utils\baseDlmTest {
         parent::setObject(new \SynoDLMSearchDivxatope);
     }
     /**
-     * @covers SynoDLMSearchNewPct::parse
+     * @covers SynoDLMSearchDivxatope::parse
      */
     public function testParse() {
        parent::parse();

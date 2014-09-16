@@ -1,0 +1,10 @@
+{
+"name": "newPct1",
+"displayname": "NewPCT1",
+"description": "Sitio de Torrents muy popular en España, anteriormente PcTorrent y NewPct. Hecho por Luskaner",
+"version": "1.1.6",
+"site": "http://www.newpct1.com",
+"module": "search.php",
+"type": "search",
+"class": "SynoDLMSearchNewPct1"
+}

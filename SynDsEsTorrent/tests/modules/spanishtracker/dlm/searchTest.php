@@ -10,7 +10,7 @@ class SynoDLMSearchSpanishTrackerTest extends \SynDsEsTorrent\utils\baseDlmTest 
         parent::setObject(new \SynoDLMSearchSpanishTracker);
     }
     /**
-     * @covers SynoDLMSearchNewPct::parse
+     * @covers SynoDLMSearchSpanishTracker::parse
      */
     public function testParse() {
        parent::parse();

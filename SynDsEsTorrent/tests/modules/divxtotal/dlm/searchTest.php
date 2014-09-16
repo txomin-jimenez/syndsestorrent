@@ -11,7 +11,7 @@ class SynoDLMSearchDivxTotalTest extends \SynDsEsTorrent\utils\baseDlmTest {
         parent::setObject(new \SynoDLMSearchDivxTotal);
     }
     /**
-     * @covers SynoDLMSearchNewPct::parse
+     * @covers SynoDLMSearchDivxTotal::parse
      */
     public function testParse() {
        parent::parse();

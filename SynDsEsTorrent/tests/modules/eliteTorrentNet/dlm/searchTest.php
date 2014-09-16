@@ -11,7 +11,7 @@ class SynoDLMSearchEliteTorrentNetTest extends \SynDsEsTorrent\utils\baseDlmTest
         parent::setObject(new \SynoDLMSearchEliteTorrentNet);
     }
     /**
-     * @covers SynoDLMSearchNewPct::parse
+     * @covers SynoDLMSearchEliteTorrentNet::parse
      */
     public function testParse() {
        parent::parse();

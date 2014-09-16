@@ -12,7 +12,7 @@ class SynoFileHostingAnimeIndexTest extends \SynDsEsTorrent\utils\BaseHostTest {
     }
    
     /**
-     * @covers SynoFileHostingNewPct::GetDownloadInfo
+     * @covers SynoFileHostingAnimeIndex::GetDownloadInfo
      */
     public function testGetDownloadInfo(){
         parent::GetDownloadInfo();

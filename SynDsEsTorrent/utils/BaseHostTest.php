@@ -14,6 +14,8 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase {
     protected function setObject($object) {
         $this->host = $object;
         $this->curl = curl_init();
+        curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, false);
+        //curl_setopt($this->curl, CURLOPT_VERBOSE, true);
         curl_setopt($this->curl, CURLOPT_COOKIE, "language=es_ES");
         curl_setopt($this->curl, CURLOPT_FAILONERROR, 1);
         curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, 1);
@@ -38,6 +40,7 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase {
         $header_size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
         $header = substr($res, 0, $header_size);
         $filename = $this->regexp('Content-Disposition:.*filename=[\'"]?+(.*)[\'";\n\r]', $header);
+        
         if ($filename !== '') {
             if ($this->endsWith($filename[1], '.torrent')){
                 return true;
