@@ -1,9 +1,12 @@
 <?php
-
+namespace modules\newPct1\dlm;
 class SynoDLMSearchNewPct1 {
 
-    private $qurl = 'http://www.newpct1.com/buscar';
+    private $qurl = 'http://www.newpct1.com/index.php?page=buscar&q=%s&categoryIDR=%s&idioma=%s&pg=%u';
     private $purl = 'http://www.newpct1.com/';
+    private $query = '';
+    private $cat = '';
+    private $lang = '';
 
     public function __construct() {
         
@@ -14,7 +17,10 @@ class SynoDLMSearchNewPct1 {
      * @param curl $curl objeto curl
      * @param string $query cadena a buscar
      */
-    public function prepare($curl, $query) {
+    public function prepare($curl, $query, $category = '', $lang = '') {
+        $this->query = iconv('UTF-8', 'ISO-8859-1', $query);
+        $this->cat = $category;
+        $this->lang = $lang;
         curl_setopt($curl, CURLOPT_COOKIE, "language=es_ES");
         curl_setopt($curl, CURLOPT_FAILONERROR, 1);
         curl_setopt($curl, CURLOPT_REFERER, $this->purl);
@@ -22,9 +28,7 @@ class SynoDLMSearchNewPct1 {
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_TIMEOUT, 20);
         curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en; rv:1.9.0.4) Gecko/2008102920 AdCentriaIM/1.7 Firefox/3.0.4');
-        curl_setopt($curl, CURLOPT_URL, $this->qurl);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, 'q=' . urlencode(iconv('UTF-8', 'ISO-8859-1', $query)));
+        curl_setopt($curl, CURLOPT_URL, sprintf($this->qurl, rawurlencode($this->query), $this->cat, $this->lang, 1));
     }
 
     /**
@@ -33,33 +37,33 @@ class SynoDLMSearchNewPct1 {
      * @param string $response respuesta html de la página
      * @return int número de resultados
      */
-    public function parse($plugin, $response) {
+    public function parse($plugin, $response, $maxPages = 10) {
         $regex_resultados = '<ul.*class="buscar-list".*>(?<resultados>.*)<\/ul>';
         $regex_info = '<li.*>.*<div.*class="info">.*<a.*href="(?<enlace_pagina>.*)".*.*<h2.*>(?<titulo>.*)<\/h2>.*<\/a>.*<span.*>(?<dia>\d+)-(?<mes>\d+)-(?<anyo>\d+)<\/span>.*<span.*>(?<tamanyo>\d+?(\.\d*?)??) (?<tipo_tamanyo>[KMGT]B).*<\/span>.*<\/div>.*<\/li>';
-
-        $pag_restantes = 10;
         $num_res = 0;
+        $pag_actual = 1;
         do {
             $resultados = $this->regexp($regex_resultados, $response);            
-            if ($resultados == '') {
-                return $num_res;
+            if ($resultados === null) {
+                break;
             }             
             $resultados_info = $this->regexp($regex_info, $resultados['resultados'], true);            
-            if ($resultados_info == '') {
-                return $num_res;
+            if ($resultados_info === null) {
+                break;
             }
-            $pag_restantes--;
             $num_res += $this->procesarResultados($plugin, $resultados_info);
-            $response = $this->obtenerSiguientePagina($response);  
-        } while ($pag_restantes > 0 && $response !== null);        
+            $response = $this->obtenerSiguientePagina($response, $pag_actual);  
+            $pag_actual++;
+        } while ($pag_actual <= $maxPages && $response !== null);        
         return $num_res;
     }
 
-    private function obtenerSiguientePagina($html) {
+    private function obtenerSiguientePagina($html, $pag_actual) {
         $res = $this->regexp('<ul.*class="pagination".*>.*<a href="(?<enlace_pag_sig>[^>]*)">Next<\/a>.*<\/ul>', $html);
         $ret = null;
-        if ($res !== '') {
-            $ret = file_get_contents($res['enlace_pag_sig']);
+        if ($res !== null) {
+            $pag_url = sprintf($this->qurl, rawurlencode($this->query), $this->cat, $this->lang, $pag_actual + 1);
+            $ret = file_get_contents($pag_url);
         }      
         return $ret;
     }
@@ -98,20 +102,17 @@ class SynoDLMSearchNewPct1 {
     }
 
     private function regexp($regexp, $texto, $global = false) {
-        $res = array();
+        $res = array();        
         if ($global) {
-            if (preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
+                $res = null;
             }
         } else {
-            if (preg_match("/$regexp/siU", $texto, $res)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match("/$regexp/siU", $texto, $res)) {
+                $res = null;
             }
         }
+        return $res;
     }
 
 }

@@ -10,3 +10,4 @@
 CAMBIOS
 -------
 DLM 1.1.6 Actualizado para soportar el nuevo módulo de alojamiento
+DLM 1.1.7 Actualizado el DLM para futuras aplicaciones
