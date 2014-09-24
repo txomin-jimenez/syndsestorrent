@@ -5,6 +5,6 @@
 "version": "1.2.9",
 "authentication": "no",
 "module": "SynoFileHostingNewPct.php",
-"class": "host\\SynoFileHostingNewPct",
+"class": "modules\\newPct_newPct1\\host\\SynoFileHostingNewPct",
 "description": "Sitio de Torrents muy popular en España, anteriormente PcTorrent. Hecho por Luskaner" 
 }

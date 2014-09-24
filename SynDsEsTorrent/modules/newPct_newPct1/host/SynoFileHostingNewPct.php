@@ -1,6 +1,6 @@
 <?php
 
-namespace host;
+namespace modules\newPct_newPct1\host;
 
 class SynoFileHostingNewPct {
 
