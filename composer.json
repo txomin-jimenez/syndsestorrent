@@ -1,5 +1,5 @@
 {
-    "name": "vendor/syn-ds-es-torrent",
+    "name": "luskaner/syn-ds-es-torrent",
     "description": "Permite la búsqueda de torrents y su descarga de páginas en español directamente desde la aplicación Download Station de Synology, así como del RSS.",
     "authors": [
         {
@@ -7,11 +7,8 @@
             "email": "luskaner@gmail.com"
         }
     ],
-    "require-dev": {
-        "phpunit/phpunit": "4.2.x",
-        "phpunit/phpunit-skeleton-generator": "dev-master"
-    },
+    "license" : "GPL-3.0",
     "autoload": {
-        "psr-4": {"SynDsEsTorrent\\": "SynDsEsTorrent/"}
+        "psr-4": {"SynDsEsTorrent\\": "."}
     }
 }

@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'SynDsEsTorrent\\' => array($baseDir . '/SynDsEsTorrent'),
+    'SynDsEsTorrent\\' => array($baseDir . '/'),
 );
