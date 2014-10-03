@@ -4,7 +4,7 @@
 "description": "Sitio de Torrents de anime. Hecho por luskaner",
 "version": "1.0.1",
 "site": "http://tracker.anime-index.org",
-"module": "search.php",
+"module": "SynoDLMSearchAnimeIndex.php",
 "type": "search",
-"class": "SynoDLMSearchAnimeIndex"
+"class": "modules\\animeIndexOrg\\dlm\\SynoDLMSearchAnimeIndex"
 }

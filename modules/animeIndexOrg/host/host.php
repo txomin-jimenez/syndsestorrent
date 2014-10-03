@@ -10,8 +10,13 @@ class SynoFileHostingAnimeIndex
         $this->Url = $Url;
     }
 
+    /**
+     * @codingStandardsIgnoreStart
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
     public function GetDownloadInfo()
     {
+        // @codingStandardsIgnoreEnd
         $DownloadInfo = array();
 
         if (strrpos($this->Url, "download.php") === false) {

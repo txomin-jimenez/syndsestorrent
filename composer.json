@@ -7,8 +7,5 @@
             "email": "luskaner@gmail.com"
         }
     ],
-    "license" : "GPL-3.0",
-    "autoload": {
-        "psr-4": {"SynDsEsTorrent\\": "."}
-    }
+    "license" : "GPL-3.0"
 }

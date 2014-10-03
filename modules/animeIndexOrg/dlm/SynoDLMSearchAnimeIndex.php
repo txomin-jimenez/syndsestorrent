@@ -1,5 +1,7 @@
 <?php
 
+namespace modules\animeIndexOrg\dlm;
+
 class SynoDLMSearchAnimeIndex
 {
     private $qurl = 'http://tracker.anime-index.org/index.php?page=torrents&search=%s&category=16&active=1';
@@ -7,6 +9,7 @@ class SynoDLMSearchAnimeIndex
 
     public function __construct()
     {
+
     }
 
     /**
@@ -34,15 +37,15 @@ class SynoDLMSearchAnimeIndex
     public function parse($plugin, $response)
     {
         // Definimos las cadenas REGEXP hasta llegar a los torrent
-        $regexp_tabla = "<table.*class=\"lista\">(.*)<\/table>";
-        $regexp_fila = "<tr.*>(.*)<\/tr>";
+        $regexpTabla = "<table.*class=\"lista\">(.*)<\/table>";
+        $regexpFila = "<tr.*>(.*)<\/tr>";
         $res = 0;
 
-        $res_tabla = array();
-        if (preg_match_all("/$regexp_tabla/siU", $response, $res_tabla)) {
-            $res_filas = array();
-            if (preg_match_all("/$regexp_fila/siU", $res_tabla[1][1], $res_filas, PREG_SET_ORDER)) {
-                $res = $this->procesarFilas($res_filas, $plugin);
+        $resTabla = array();
+        if (preg_match_all("/$regexpTabla/siU", $response, $resTabla)) {
+            $resFilas = array();
+            if (preg_match_all("/$regexpFila/siU", $resTabla[1][1], $resFilas, PREG_SET_ORDER)) {
+                $res = $this->procesarFilas($resFilas, $plugin);
             }
         }
 
@@ -57,7 +60,17 @@ class SynoDLMSearchAnimeIndex
             $info = $this->procesarMultiple($filas[$i][1]);
             $fecha = $this->procesarFecha($filas[$i][1]);
             $hash = md5($info['titulo']);
-            $plugin->addResult($info['titulo'], $info['urlDescarga'], 0, $fecha, $info['urlPagina'], $hash, $info['semillas'], $info['clientes'], "Sin clasificar");
+            $plugin->addResult(
+                $info['titulo'],
+                $info['urlDescarga'],
+                0,
+                $fecha,
+                $info['urlPagina'],
+                $hash,
+                $info['semillas'],
+                $info['clientes'],
+                "Sin clasificar"
+            );
             $res++;
         }
 
@@ -67,14 +80,14 @@ class SynoDLMSearchAnimeIndex
     private function procesarMultiple($fila)
     {
         $resInfo = $this->regexp("<td.*>(.*)<\/td>", $fila, true);
-        $res_url_Pagina = $this->regexp('<a.*href="(.*)".*>', $resInfo[1][1]);
-        $res_url_Descarga = $this->regexp('<a.*href="(.*)".*>', $resInfo[2][1]);
+        $resUrlPagina = $this->regexp('<a.*href="(.*)".*>', $resInfo[1][1]);
+        $resUrlDescarga = $this->regexp('<a.*href="(.*)".*>', $resInfo[2][1]);
         $info = array(
-            'urlPagina'     => $this->purl . html_entity_decode($res_url_Pagina[1]),
-            'titulo'        => strip_tags($resInfo[1][0]),
-            'urlDescarga'   => $this->purl . html_entity_decode($res_url_Descarga[1]),
-            'semillas'      => strip_tags($resInfo[4][0]),
-            'clientes'      => strip_tags($resInfo[5][0])
+            'urlPagina' => $this->purl . html_entity_decode($resUrlPagina[1]),
+            'titulo' => strip_tags($resInfo[1][0]),
+            'urlDescarga' => $this->purl . html_entity_decode($resUrlDescarga[1]),
+            'semillas' => strip_tags($resInfo[4][0]),
+            'clientes' => strip_tags($resInfo[5][0])
         );
 
         return $info;
@@ -96,18 +109,15 @@ class SynoDLMSearchAnimeIndex
     {
         $res = array();
         if ($global) {
-            if (preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
+                $res = null;
             }
         } else {
-            if (preg_match("/$regexp/siU", $texto, $res)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match("/$regexp/siU", $texto, $res)) {
+                $res = null;
             }
         }
-    }
 
+        return $res;
+    }
 }
