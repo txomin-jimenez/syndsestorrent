@@ -1,5 +1,24 @@
 <?php
 
+/*
+    This file is part of SynDsEsTorrent.
+
+    SynDsEsTorrent is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SynDsEsTorrent is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SynDsEsTorrent.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace modules\divxatope\dlm;
+
 class SynoDLMSearchDivxatope
 {
     private $qurl = 'http://divxatope.com/main.php?q=%s';
@@ -7,10 +26,10 @@ class SynoDLMSearchDivxatope
 
     public function __construct()
     {
+        
     }
 
     /**
-     *
      * @param curl   $curl  objeto curl
      * @param string $query cadena a buscar
      */
@@ -34,12 +53,12 @@ class SynoDLMSearchDivxatope
     public function parse($plugin, $response)
     {
         // Definimos las cadenas REGEXP hasta llegar a los torrent
-        $regexp_fila = "<div.*class=\"torrent-info\".*>(.*)<\/div>";
+        $regexpFila = "<div.*class=\"torrent-info\".*>(.*)<\/div>";
         $res = 0;
 
-        $res_filas = array();
-        if (preg_match_all("/$regexp_fila/siU", $response, $res_filas, PREG_SET_ORDER)) {
-            $res = $this->procesarFilas($res_filas, $plugin);
+        $resFilas = array();
+        if (preg_match_all("/$regexpFila/siU", $response, $resFilas, PREG_SET_ORDER)) {
+            $res = $this->procesarFilas($resFilas, $plugin);
         }
 
         return $res;
@@ -53,7 +72,17 @@ class SynoDLMSearchDivxatope
             $info = $this->procesarMultiple($filas[$i][1]);
             $fecha = $this->procesarFecha($filas[$i][1]);
             $hash = md5($info['titulo']);
-            $plugin->addResult($info['titulo'], $info['urlPagina'], $info['tamano'], $fecha, $info['urlPagina'], $hash, -1, -1, $info['categoria']);
+            $plugin->addResult(
+                $info['titulo'],
+                $info['urlPagina'],
+                $info['tamano'],
+                $fecha,
+                $info['urlPagina'],
+                $hash,
+                -1,
+                -1,
+                $info['categoria']
+            );
             $res++;
         }
 
@@ -64,10 +93,10 @@ class SynoDLMSearchDivxatope
     {
         $resInfo = $this->regexp("<a.*href\s*=\s*\"(?<url>.*)\".*>(?<contenido>.*)<\/a>", $fila, true);
         $info = array(
-            'urlPagina'     => $this->purl . html_entity_decode($resInfo[0]['url']),
-            'titulo'        => trim($resInfo[0]['contenido']),
-            'categoria'     => trim($resInfo[1]['contenido']),
-            'tamano'        => $resInfo[3]['contenido'] * 1024 * 1024
+            'urlPagina' => $this->purl . html_entity_decode($resInfo[0]['url']),
+            'titulo' => trim($resInfo[0]['contenido']),
+            'categoria' => trim($resInfo[1]['contenido']),
+            'tamano' => $resInfo[3]['contenido'] * 1024 * 1024
         );
 
         return $info;
@@ -97,5 +126,4 @@ class SynoDLMSearchDivxatope
             }
         }
     }
-
 }

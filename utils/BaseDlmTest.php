@@ -1,6 +1,6 @@
 <?php
 
-namespace SynDsEsTorrent\utils;
+namespace utils;
 
 abstract class BaseDlmTest extends \PHPUnit_Framework_TestCase
 {

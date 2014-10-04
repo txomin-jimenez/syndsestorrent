@@ -1,4 +1,24 @@
 <?php
+
+/*
+    This file is part of SynDsEsTorrent.
+
+    SynDsEsTorrent is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SynDsEsTorrent is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SynDsEsTorrent.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace modules\divxtotal\dlm;
+
 class SynoDLMSearchDivxTotal
 {
 
@@ -39,22 +59,21 @@ class SynoDLMSearchDivxTotal
     public function parse($plugin, $response)
     {
         // Definimos las cadenas REGEXP hasta llegar a los torrent
-        $regexp_res = "<ul.*class=\"section_list\".*>(.*)<\/ul>";
+        $regexpRes = "<ul.*class=\"section_list\".*>(.*)<\/ul>";
         $res = 0;
 
-        $res_tabla = $this->regexp($regexp_res, $response);
-        if ($res_tabla != '') {
-            $res_info = $this->regexp(
-            "<li.*class=\"section_item\d*\".*>.*<a.*href=\"(?P<url>.*)\".*>(?P<"
-                . "nombre>.*)<\/a>.*<p.*class=\"seccontgen\".*><a.*>(?P<categor"
+        $resTabla = $this->regexp($regexpRes, $response);
+        if ($resTabla != '') {
+            $resInfo = $this->regexp(
+                "<li.*class=\"section_item\d*\".*>.*<a.*href=\"(?P<url>.*)\".*>("
+                . "?P<nombre>.*)<\/a>.*<p.*class=\"seccontgen\".*><a.*>(?P<categor"
                 . "ia>.*)<\/a>.*<\/p>.*<p.*class=\"seccontfetam\".*>(?P<dia>\d+"
                 . ")-(?P<mes>\d+)-(?P<ano>\d+)<\/p>.*<p.*class=\"seccontfetam\""
-                . ".*>(?P<tamano>\d+\.\d*)\s(?P<tipo_tamano>[MG]B)<\/p>.*<\/li>"
-            ,
-            $res_tabla[1],
-            true
+                . ".*>(?P<tamano>\d+\.\d*)\s(?P<tipo_tamano>[MG]B)<\/p>.*<\/li>",
+                $resTabla[1],
+                true
             );
-            $res = $this->procesarFilas($res_info, $plugin);
+            $res = $this->procesarFilas($resInfo, $plugin);
         }
 
         return $res;
@@ -100,20 +119,20 @@ class SynoDLMSearchDivxTotal
 
         }
 
-        $res_id = $this->regexp('\/torrent\/(?P<id>\d+)\/', $fila['url']);
+        $resId = $this->regexp('\/torrent\/(?P<id>\d+)\/', $fila['url']);
 
-        if (!isset($res_id['id'])) {
+        if (!isset($resId['id'])) {
             $fila['url'] = substr($fila['url'], 1);
-            $url_descarga = self::REFERER_URL . $fila['url'] . '?cap='
+            $urlDescarga = self::REFERER_URL . $fila['url'] . '?cap='
                             . rawurlencode(trim($fila['nombre']));
         } else {
-            $url_descarga = 'http://www.divxtotal.com/download.php?id='
-                            . $res_id['id'];
+            $urlDescarga = 'http://www.divxtotal.com/download.php?id='
+                            . $resId['id'];
         }
 
         $info = array(
             'urlPagina' => self::REFERER_URL . $fila['url'],
-            'urlDescarga' => $url_descarga,
+            'urlDescarga' => $urlDescarga,
             'titulo'    => iconv('ISO-8859-1', 'UTF-8', trim($fila['nombre'])),
             'categoria' => iconv('ISO-8859-1', 'UTF-8', trim($fila['categoria'])),
             'fecha'     => "{$fila['ano']}-{$fila['mes']}-{$fila['dia']}",
@@ -127,18 +146,15 @@ class SynoDLMSearchDivxTotal
     {
         $res = array();
         if ($global) {
-            if (preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
+                $res = null;
             }
         } else {
-            if (preg_match("/$regexp/siU", $texto, $res)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match("/$regexp/siU", $texto, $res)) {
+                $res = null;
             }
         }
-    }
 
+        return $res;
+    }
 }

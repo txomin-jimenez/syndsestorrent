@@ -1,5 +1,22 @@
 <?php
 
+/*
+    This file is part of SynDsEsTorrent.
+
+    SynDsEsTorrent is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SynDsEsTorrent is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SynDsEsTorrent.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 namespace modules\newPct1\dlm;
 
 class SynoDLMSearchNewPct1
@@ -31,7 +48,8 @@ class SynoDLMSearchNewPct1
         curl_setopt($curl, CURLOPT_ENCODING, '');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_TIMEOUT, 20);
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en; rv:1.9.0.4) Gecko/2008102920 AdCentriaIM/1.7 Firefox/3.0.4');
+        //curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1;
+        //en; rv:1.9.0.4) Gecko/2008102920 AdCentriaIM/1.7 Firefox/3.0.4');
         curl_setopt($curl, CURLOPT_URL, sprintf($this->qurl, rawurlencode($this->query), $this->cat, $this->lang, 1));
     }
 
@@ -43,33 +61,36 @@ class SynoDLMSearchNewPct1
      */
     public function parse($plugin, $response, $maxPages = 10)
     {
-        $regex_resultados = '<ul.*class="buscar-list".*>(?<resultados>.*)<\/ul>';
-        $regex_info = '<li.*>.*<div.*class="info">.*<a.*href="(?<enlace_pagina>.*)".*.*<h2.*>(?<titulo>.*)<\/h2>.*<\/a>.*<span.*>(?<dia>\d+)-(?<mes>\d+)-(?<anyo>\d+)<\/span>.*<span.*>(?<tamanyo>\d+?(\.\d*?)??) (?<tipo_tamanyo>[KMGT]B).*<\/span>.*<\/div>.*<\/li>';
-        $num_res = 0;
-        $pag_actual = 1;
+        $regexResultados = '<ul.*class="buscar-list".*>(?<resultados>.*)<\/ul>';
+        $regexInfo = '<li.*>.*<div.*class="info">.*<a.*href="(?<enlace_pagina>.'
+                . '*)".*.*<h2.*>(?<titulo>.*)<\/h2>.*<\/a>.*<span.*>(?<dia>\d+)'
+                . '-(?<mes>\d+)-(?<anyo>\d+)<\/span>.*<span.*>(?<tamanyo>\d+?('
+                . '\.\d*?)??) (?<tipo_tamanyo>[KMGT]B).*<\/span>.*<\/div>.*<\/li>';
+        $numRes = 0;
+        $pagActual = 1;
         do {
-            $resultados = $this->regexp($regex_resultados, $response);
+            $resultados = $this->regexp($regexResultados, $response);
             if ($resultados === null) {
                 break;
             }
-            $resultados_info = $this->regexp($regex_info, $resultados['resultados'], true);
-            if ($resultados_info === null) {
+            $resultadosInfo = $this->regexp($regexInfo, $resultados['resultados'], true);
+            if ($resultadosInfo === null) {
                 break;
             }
-            $num_res += $this->procesarResultados($plugin, $resultados_info);
-            $response = $this->obtenerSiguientePagina($response, $pag_actual);
-            $pag_actual++;
-        } while ($pag_actual <= $maxPages && $response !== null);
+            $numRes += $this->procesarResultados($plugin, $resultadosInfo);
+            $response = $this->obtenerSiguientePagina($response, $pagActual);
+            $pagActual++;
+        } while ($pagActual <= $maxPages && $response !== null);
 
-        return $num_res;
+        return $numRes;
     }
 
-    private function obtenerSiguientePagina($html, $pag_actual)
+    private function obtenerSiguientePagina($html, $pagActual)
     {
         $res = $this->regexp('<ul.*class="pagination".*>.*<a href="(?<enlace_pag_sig>[^>]*)">Next<\/a>.*<\/ul>', $html);
         $ret = null;
         if ($res !== null) {
-            $pag_url = sprintf($this->qurl, rawurlencode($this->query), $this->cat, $this->lang, $pag_actual + 1);
+            $pagUrl = sprintf($this->qurl, rawurlencode($this->query), $this->cat, $this->lang, $pagActual + 1);
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_COOKIE, "language=es_ES");
             curl_setopt($curl, CURLOPT_FAILONERROR, 1);
@@ -78,8 +99,9 @@ class SynoDLMSearchNewPct1
             curl_setopt($curl, CURLOPT_ENCODING, '');
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_TIMEOUT, 20);
-            curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en; rv:1.9.0.4) Gecko/2008102920 AdCentriaIM/1.7 Firefox/3.0.4');
-            curl_setopt($curl, CURLOPT_URL, $pag_url);
+            //curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en; rv:1.9.0.4) Gecko/20
+            //08102920 AdCentriaIM/1.7 Firefox/3.0.4');
+            curl_setopt($curl, CURLOPT_URL, $pagUrl);
             $ret = curl_exec($curl);
         }
 
@@ -93,34 +115,44 @@ class SynoDLMSearchNewPct1
             $fecha = "{$resultado['anyo']}-{$resultado['mes']}-{$resultado['dia']}";
             $titulo = str_replace('&nbsp;', ' ', strip_tags(iconv('ISO-8859-1', 'UTF-8', $resultado['titulo'])));
             $hash = md5($titulo);
-            $enlace_pagina = $resultado['enlace_pagina'];
+            $enlacePagina = $resultado['enlace_pagina'];
             $tamano = $this->obtenerTamanyo($resultado['tamanyo'], $resultado['tipo_tamanyo']);
-            $plugin->addResult($titulo, $enlace_pagina . '/dlm/', $tamano, $fecha, $enlace_pagina, $hash, -1, -1, "Sin clasificar");
+            $plugin->addResult(
+                $titulo,
+                $enlacePagina . '/dlm/',
+                $tamano,
+                $fecha,
+                $enlacePagina,
+                $hash,
+                -1,
+                -1,
+                "Sin clasificar"
+            );
             $res++;
         }
 
         return $res;
     }
 
-    private function obtenerTamanyo($tamano, $tipo_tamano)
+    private function obtenerTamanyo($tamano, $tipoTamano)
     {
-        $tamano_calculado = $tamano;
-        switch ($tipo_tamano) {
+        $tamanoCalculado = $tamano;
+        switch ($tipoTamano) {
             case 'KB':
-                $tamano_calculado *= 1024;
+                $tamanoCalculado *= 1024;
                 break;
             case 'MB':
-                $tamano_calculado *= 1024 * 1024;
+                $tamanoCalculado *= 1024 * 1024;
                 break;
             case 'GB':
-                $tamano_calculado *= 1024 * 1024 * 1024;
+                $tamanoCalculado *= 1024 * 1024 * 1024;
                 break;
             case 'TB':
-                $tamano_calculado *= 1024 * 1024 * 1024 * 1024;
+                $tamanoCalculado *= 1024 * 1024 * 1024 * 1024;
                 break;
         }
 
-        return $tamano_calculado;
+        return $tamanoCalculado;
     }
 
     private function regexp($regexp, $texto, $global = false)
@@ -138,5 +170,4 @@ class SynoDLMSearchNewPct1
 
         return $res;
     }
-
 }

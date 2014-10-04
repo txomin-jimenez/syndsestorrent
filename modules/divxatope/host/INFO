@@ -4,7 +4,7 @@
 "displayname": "DIVXaTope",
 "version": "1.0.0",
 "authentication": "no",
-"module": "host.php",
-"class": "SynoFileHostingDivxatope",
+"module": "SynoFileHostingDivxatope.php",
+"class": "modules\\animeIndexOrg\\host\\SynoFileHostingDivxatope",
 "description": "Descargas Gratis de DivX, PSP, P2P, Torrents, Torrent y BitTorrent. Hecho por Luskaner" 
 }

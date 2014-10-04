@@ -4,7 +4,7 @@
 "description": "Descargas Gratis de DivX, PSP, P2P, Torrents, Torrent y BitTorrent. Hecho por Luskaner",
 "version": "1.0.0",
 "site": "http://divxatope.com",
-"module": "search.php",
+"module": "SynoDLMSearchDivxatopephp",
 "type": "search",
-"class": "SynoDLMSearchDivxatope"
+"class": "modules\\divxatope\\dlm\\SynoDLMSearchDivxatope"
 }

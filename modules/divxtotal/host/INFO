@@ -4,7 +4,7 @@
 "displayname": "DivXTotal",
 "version": "1.0.0",
 "authentication": "no",
-"module": "host.php",
-"class": "SynoFileHostingDivxTotal",
+"module": "SynoFileHostingDivxTotal".php",
+"class": "modules\\divxtotal\\host\\SynoFileHostingDivxTotal",
 "description": "Peliculas - Series - Musica y mucho mas. Hecho por Luskaner" 
 }

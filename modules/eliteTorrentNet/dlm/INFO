@@ -4,7 +4,7 @@
 "description": "Web para descargas torrents, estrenos, peliculas, series, juegos y mucho más totalmente libre y gratuito. Hecho por Luskaner",
 "version": "1.0.0",
 "site": "http://www.elitetorrent.net",
-"module": "search.php",
+"module": "SynoDLMSearchEliteTorrentNet.php",
 "type": "search",
-"class": "SynoDLMSearchEliteTorrentNet"
+"class": "modules\\eliteTorrentNet\\dlm\\SynoDLMSearchEliteTorrentNet"
 }
