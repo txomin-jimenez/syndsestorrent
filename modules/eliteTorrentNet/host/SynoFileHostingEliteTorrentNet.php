@@ -54,7 +54,7 @@ class SynoFileHostingEliteTorrentNet
         if (preg_match("/elitetorrent.net\/torrent\/(\d+)/", $url, $matches)) {
             $ret = sprintf(SynoFileHostingEliteTorrentNet::WEB_URL, $matches[1]);
         }
-        
+
         return $ret;
     }
 }

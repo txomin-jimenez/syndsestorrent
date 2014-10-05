@@ -26,7 +26,7 @@ class SynoDLMSearchDivxatope
 
     public function __construct()
     {
-        
+
     }
 
     /**

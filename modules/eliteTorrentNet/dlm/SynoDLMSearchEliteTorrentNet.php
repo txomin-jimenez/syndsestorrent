@@ -138,7 +138,7 @@ class SynoDLMSearchEliteTorrentNet
         if (!isset($semillas[1])) {
             $numSemillas = $semillas[1];
         }
-        
+
         return $numSemillas;
     }
 

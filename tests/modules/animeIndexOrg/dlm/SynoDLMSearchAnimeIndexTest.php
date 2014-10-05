@@ -31,7 +31,7 @@ class SynoDLMSearchAnimeIndexTest extends \utils\BaseDlmTest
         parent::setObject(new SynoDLMSearchAnimeIndex());
     }
     /**
-     * @covers SynoDLMSearchAnimeIndex::parse
+     * @covers modules\animeIndexOrg\dlm\SynoDLMSearchAnimeIndex::parse
      */
     public function testParse()
     {

@@ -31,11 +31,10 @@ class SynoDLMSearchDivxatopeTest extends \utils\baseDlmTest
         parent::setObject(new SynoDLMSearchDivxatope());
     }
     /**
-     * @covers SynoDLMSearchDivxatope::parse
+     * @covers modules\divxatope\dlm\SynoDLMSearchDivxatope::parse
      */
     public function testParse()
     {
-       parent::parse();
+        parent::parse();
     }
-
 }

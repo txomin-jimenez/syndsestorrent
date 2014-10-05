@@ -67,7 +67,7 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
         } elseif ($info["content_type"] == "application/x-bittorrent") {
             $ret = true;
         }
-        
+
         return $ret;
     }
 

@@ -44,6 +44,7 @@ class SynoFileHostingDivxatope
         $downloadInfo[DOWNLOAD_URL] = $this->getTorrentUrl();
         $downloadInfo[DOWNLOAD_COOKIE] = SynoFileHostingDivxatope::COOKIE;
         $ret = $downloadInfo;
+
         return $ret;
     }
 
@@ -69,6 +70,7 @@ class SynoFileHostingDivxatope
         if (preg_match("/$regexpUrl/iU", $dlPage, $matchesUrl)) {
             $ret = $matchesUrl[1];
         }
+
         return $ret;
     }
 }

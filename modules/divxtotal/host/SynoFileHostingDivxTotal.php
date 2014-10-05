@@ -36,13 +36,13 @@ class SynoFileHostingDivxTotal
         $downloadInfo[DOWNLOAD_URL] = $this->url;
         $resTorrent = $this->regexp("\/torrent\/(?<id>\d+)\/", $this->url);
         $resSerie = $this->regexp("\/series\/", $this->url);
+        
         if ($resTorrent !== false) {
             $downloadInfo[DOWNLOAD_URL] = "http://www.divxtotal.com/download.ph"
                     . "p?id={$resTorrent['id']}";
         } elseif ($resSerie !== false) {
             $downloadInfo[DOWNLOAD_URL] = $this->getSerieUrl();
         }
-
         return $downloadInfo;
     }
 
@@ -82,5 +82,6 @@ class SynoFileHostingDivxTotal
                 $ret = $res;
             }
         }
+        return $ret;
     }
 }
