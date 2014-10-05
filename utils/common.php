@@ -19,7 +19,10 @@ define('ERR_PRIVATE_VIDEO', 128);
 define('USER_HOST_DIR', '/var/packages/DownloadStation/etc/download/userhosts');
 define('USER_HOST_CONF_DIR', '/var/packages/DownloadStation/etc/download/host.conf');
 define('WGET', '/var/packages/DownloadStation/target/bin/wget');
-define('DOWNLOAD_STATION_USER_AGENT', "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535 (KHTML, like Gecko) Chrome/14 Safari/535");
+define(
+    'DOWNLOAD_STATION_USER_AGENT',
+    "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535 (KHTML, like Gecko) Chrome/14 Safari/535"
+);
 define('DOWNLOAD_TIMEOUT', 20);
 define('DOWNLOAD_URL', 'downloadurl');
 define('DOWNLOAD_FILENAME', 'filename');
