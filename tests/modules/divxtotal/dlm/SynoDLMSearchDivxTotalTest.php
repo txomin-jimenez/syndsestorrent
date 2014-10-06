@@ -37,4 +37,12 @@ class SynoDLMSearchDivxTotalTest extends \utils\baseDlmTest
     {
         parent::parse();
     }
+
+    /**
+     * @covers modules\divxtotal\dlm\SynoDLMSearchDivxTotal::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

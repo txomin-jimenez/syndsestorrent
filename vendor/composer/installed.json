@@ -1,0 +1,41 @@
+[
+    {
+        "name": "pear/net_dns2",
+        "version": "dev-trunk",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "svn",
+            "url": "http://netdns2.googlecode.com/svn",
+            "reference": "/trunk/@223"
+        },
+        "require": {
+            "php": ">=5.1.2"
+        },
+        "time": "2014-09-21 07:47:52",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Net_DNS2": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-2-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Mike Pultz",
+                "email": "mike@mikepultz.com",
+                "homepage": "http://mikepultz.com/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Native PHP5 DNS Resolver and Updater Library",
+        "homepage": "https://code.google.com/p/netdns2/",
+        "keywords": [
+            "dns",
+            "network"
+        ]
+    }
+]

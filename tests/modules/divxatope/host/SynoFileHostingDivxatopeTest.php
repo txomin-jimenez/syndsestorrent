@@ -43,4 +43,12 @@ class SynoFileHostingDivxatopeTest extends \utils\BaseHostTest
     {
         parent::getDownloadInfo();
     }
+
+    /**
+     * @covers modules\divxatope\host\SynoFileHostingDivxatope::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

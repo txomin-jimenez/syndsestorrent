@@ -21,7 +21,8 @@ namespace utils;
 
 abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
 {
-    abstract protected function testGetDownloadInfo();
+    abstract public function testGetDownloadInfo();
+    abstract public function testLoadInfo();
 
     protected $host;
     protected $curl;
@@ -69,6 +70,58 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
         }
 
         return $ret;
+    }
+
+    protected function loadInfoTest()
+    {
+        $infoClase = new \ReflectionClass($this->host);
+        $carpetaClase = dirname($infoClase->getFileName());
+        $ficheroInfo = "$carpetaClase/INFO";
+        $this->assertFileExists($ficheroInfo);
+        $infoFichero = json_decode(file_get_contents($ficheroInfo), true);
+
+        $atributos = [
+            'name',
+            'displayname',
+            'description',
+            'version',
+            'hostprefix',
+            'module',
+            'authentication',
+            'class'
+        ];
+
+        foreach ($atributos as $atributo) {
+            $this->assertArrayHasKey($atributo, $infoFichero);
+            $this->assertNotEmpty($infoFichero[$atributo]);
+        }
+
+        $prefijosHost = explode(',', $infoFichero['hostprefix']);
+        $resolvedor = new \Net_DNS2_Resolver(['nameservers' => ['8.8.8.8']]);
+        
+        foreach ($prefijosHost as $prefijo) {
+            $respuesta = $resolvedor->query($prefijo, 'A');
+            $this->assertNotFalse(
+                filter_var(
+                    $respuesta->answer[0]->address,
+                    FILTER_VALIDATE_IP
+                ),
+                "Prefijo de dominio $prefijo no válido"
+            );
+        }
+
+        $this->assertRegExp('/^\d(\.\d)*$/', $infoFichero['version']);
+        $this->assertThat(
+            $infoFichero['authentication'],
+            $this->logicalOr($this->equalTo('yes'), $this->equalTo('no'))
+        );
+        $this->assertEquals(basename($infoClase->getFileName()), $infoFichero['module']);
+        $this->assertTrue(class_exists($infoFichero['class']), "Clase '{$infoFichero["class"]}' inexistente");
+        $this->assertEquals(
+            get_class($this->host),
+            $infoFichero['class'],
+            "La clase {$infoFichero['class']} debería ser " . get_class($this->host)
+        );
     }
 
     private function endsWith($haystack, $needle)

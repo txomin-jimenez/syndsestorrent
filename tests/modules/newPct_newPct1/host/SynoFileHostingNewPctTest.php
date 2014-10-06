@@ -51,4 +51,17 @@ class SynoFileHostingNewPctTest extends \utils\BaseHostTest
         );
         parent::getDownloadInfo();
     }
+
+    /**
+     * @covers modules\newpct_newPct1\host\SynoFileHostingNewPct::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::setObject(
+            new SynoFileHostingNewPct(
+                "http://www.newpct.com/descargar-serie/cougar-town/capitulo-501/"
+            )
+        );
+        parent::loadInfoTest();
+    }
 }

@@ -37,4 +37,12 @@ class SynoDLMSearchDivxatopeTest extends \utils\baseDlmTest
     {
         parent::parse();
     }
+
+    /**
+     * @covers modules\divxatope\dlm\SynoDLMSearchDivxatope::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

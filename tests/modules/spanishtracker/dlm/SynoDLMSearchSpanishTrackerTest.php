@@ -37,4 +37,12 @@ class SynoDLMSearchSpanishTrackerTest extends \utils\baseDlmTest
     {
         parent::parse();
     }
+
+    /**
+     * @covers modules\spanishtracker\dlm\SynoDLMSearchSpanishTracker::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

@@ -38,4 +38,12 @@ class SynoDLMSearchNewPct1Test extends \utils\baseDlmTest
     {
         parent::parse();
     }
+
+    /**
+     * @covers modules\newPct1\dlm\SynoDLMSearchNewPct1::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

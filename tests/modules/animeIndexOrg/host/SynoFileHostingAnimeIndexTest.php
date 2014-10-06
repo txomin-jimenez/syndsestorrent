@@ -43,4 +43,12 @@ class SynoFileHostingAnimeIndexTest extends \utils\BaseHostTest
     {
         parent::getDownloadInfo();
     }
+
+    /**
+     * @covers modules\animeIndexOrg\host\SynoFileHostingAnimeIndex::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

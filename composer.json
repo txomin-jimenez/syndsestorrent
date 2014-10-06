@@ -14,6 +14,10 @@
             "utils\\": "utils/",
             "tests\\": "tests/"
         }
+    },
+    "require-dev": {
+    },
+    "require": {
+        "pear/net_dns2": "dev-trunk"
     }
-
 }

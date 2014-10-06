@@ -37,4 +37,12 @@ class SynoDLMSearchAnimeIndexTest extends \utils\BaseDlmTest
     {
         parent::parse();
     }
+
+    /**
+     * @covers modules\animeIndexOrg\dlm\SynoDLMSearchAnimeIndex::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

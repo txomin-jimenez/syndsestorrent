@@ -42,4 +42,12 @@ class SynoFileHostingEliteTorrentNetTest extends \utils\BaseHostTest
     {
         parent::GetDownloadInfo();
     }
+
+    /**
+     * @covers modules\eliteTorrentNet\host\SynoFileHostingEliteTorrentNet::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

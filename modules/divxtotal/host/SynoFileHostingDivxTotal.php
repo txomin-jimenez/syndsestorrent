@@ -43,6 +43,7 @@ class SynoFileHostingDivxTotal
         } elseif ($resSerie !== false) {
             $downloadInfo[DOWNLOAD_URL] = $this->getSerieUrl();
         }
+
         return $downloadInfo;
     }
 
@@ -82,6 +83,7 @@ class SynoFileHostingDivxTotal
                 $ret = $res;
             }
         }
+
         return $ret;
     }
 }

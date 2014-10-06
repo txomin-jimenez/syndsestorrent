@@ -42,4 +42,12 @@ class SynoFileHostingDivxTotalTest extends \utils\BaseHostTest
     {
         parent::getDownloadInfo();
     }
+
+    /**
+     * @covers modules\divxtotal\host\SynoFileHostingDivxTotal::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }

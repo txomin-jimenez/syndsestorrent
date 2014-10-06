@@ -37,4 +37,12 @@ class SynoDLMSearchEliteTorrentNetTest extends \utils\baseDlmTest
     {
         parent::parse();
     }
+
+    /**
+     * @covers modules\eliteTorrentNet\dlm\SynoDLMSearchEliteTorrentNet::__construct
+     */
+    public function testLoadInfo()
+    {
+        parent::loadInfoTest();
+    }
 }
