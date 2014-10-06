@@ -98,7 +98,7 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
 
         $prefijosHost = explode(',', $infoFichero['hostprefix']);
         $resolvedor = new \Net_DNS2_Resolver(['nameservers' => ['8.8.8.8']]);
-        
+
         foreach ($prefijosHost as $prefijo) {
             $respuesta = $resolvedor->query($prefijo, 'A');
             $this->assertNotFalse(
