@@ -39,7 +39,6 @@ abstract class BaseDlmTest extends \PHPUnit_Framework_TestCase
         $curl = curl_init();
         $this->search->prepare($curl, 'a');
         $data = curl_exec($curl);
-        $this->search->parse($plugin, $data);
         $this->assertGreaterThan(0, $this->search->parse($plugin, $data), "No hay resultados");
     }
 
