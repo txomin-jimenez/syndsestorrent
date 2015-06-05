@@ -2,7 +2,7 @@
 "name": "divxatopeDlm",
 "displayname": "DIVXaTope",
 "description": "Descargas Gratis de DivX, PSP, P2P, Torrents, Torrent y BitTorrent. Hecho por Luskaner",
-"version": "1.0.0",
+"version": "1.0.1",
 "site": "http://divxatope.com",
 "module": "SynoDLMSearchDivxatope.php",
 "type": "search",

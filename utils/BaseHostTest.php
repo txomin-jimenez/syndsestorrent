@@ -32,6 +32,7 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
         $this->host = $object;
         $this->curl = curl_init();
         curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, false);
         //curl_setopt($this->curl, CURLOPT_VERBOSE, true);
         curl_setopt($this->curl, CURLOPT_COOKIE, "language=es_ES");
         curl_setopt($this->curl, CURLOPT_FAILONERROR, 1);
@@ -45,11 +46,13 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
     protected function getDownloadInfo()
     {
         $dlInfo = $this->host->GetDownloadInfo();
+        
         if (isset($dlInfo[DOWNLOAD_COOKIE])) {
             curl_setopt($this->curl, CURLOPT_COOKIEFILE, $dlInfo[DOWNLOAD_COOKIE]);
         }
         curl_setopt($this->curl, CURLOPT_URL, $dlInfo[DOWNLOAD_URL]);
         $res = curl_exec($this->curl);
+        
         $info = curl_getinfo($this->curl);
         $this->assertTrue($this->isTorrentFile($res, $info, "El fichero a descargar no es un .torrent"));
     }
@@ -58,8 +61,9 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
     {
         $headerSize = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
         $header = substr($res, 0, $headerSize);
+        
         $filename = $this->regexp('Content-Disposition:.*filename=[\'"]?+(.*)[\'";\n\r]', $header);
-
+        
         $ret = false;
         if ($filename !== null) {
             if ($this->endsWith($filename[1], '.torrent')) {
@@ -110,7 +114,7 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
             );
         }
 
-        $this->assertRegExp('/^\d(\.\d)*$/', $infoFichero['version']);
+        $this->assertRegExp('/^\d*\.\d+(\.\d+)?$/', $infoFichero['version']);
         $this->assertThat(
             $infoFichero['authentication'],
             $this->logicalOr($this->equalTo('yes'), $this->equalTo('no'))

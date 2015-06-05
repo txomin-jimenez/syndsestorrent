@@ -2,7 +2,7 @@
 "name": "newPctAuth",
 "hostprefix": "newpct.com,newpct1.com",
 "displayname": "NewPCT-NewPCT1",
-"version": "1.2.9",
+"version": "1.2.10",
 "authentication": "no",
 "module": "SynoFileHostingNewPct.php",
 "class": "modules\\newPct_newPct1\\host\\SynoFileHostingNewPct",

@@ -35,3 +35,4 @@ DLM 1.1.4/HOST 1.2.7 Ajustado ambos módulos debido a un cambio de la página we
 DLM 1.1.5/HOST 1.2.7 Ajustado el módulo de búsqueda para que muestre hasta 300 resultados (10 páginas) y corregido un error que provocaba resultados incorrectos
 HOST 1.2.8 El módulo de alojamiento vuelve a soportar enlaces RSS a NewPct.com mediante un proxy (ya no se soportan enlaces RSS a NewPct1.com para evitar posibles duplicados), se continua soportando y es necesario para descargar las búsquedas del módulo de búsqueda. Ya se descargan correctamente todos los tipos de contenidos del módulo de búsqueda.
 HOST 1.2.9 Actualizado para una aplicación futura secreta
+HOST 1.2.10 Se ignora la comprobación de certificado para que funcione el proxy correctamente

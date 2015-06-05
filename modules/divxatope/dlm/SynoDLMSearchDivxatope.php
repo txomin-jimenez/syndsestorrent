@@ -1,32 +1,33 @@
 <?php
 
 /*
-    This file is part of SynDsEsTorrent.
+  This file is part of SynDsEsTorrent.
 
-    SynDsEsTorrent is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+  SynDsEsTorrent is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-    SynDsEsTorrent is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  SynDsEsTorrent is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with SynDsEsTorrent.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with SynDsEsTorrent.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace modules\divxatope\dlm;
 
 class SynoDLMSearchDivxatope
 {
-    private $qurl = 'http://divxatope.com/main.php?q=%s';
+
+    private $qurl = 'http://www.divxatope.com/newtemp/include/ajax/ajax.search.php?search=%s';
     private $purl = 'http://divxatope.com/';
 
     public function __construct()
     {
-
+        
     }
 
     /**
@@ -53,7 +54,7 @@ class SynoDLMSearchDivxatope
     public function parse($plugin, $response)
     {
         // Definimos las cadenas REGEXP hasta llegar a los torrent
-        $regexpFila = "<div.*class=\"torrent-info\".*>(.*)<\/div>";
+        $regexpFila = "<li.*>(.*)<\/li>";
         $res = 0;
 
         $resFilas = array();
@@ -67,21 +68,12 @@ class SynoDLMSearchDivxatope
     private function procesarFilas($filas, $plugin)
     {
         $res = 0;
-
+        
         for ($i = 0; isset($filas[$i][1]); $i++) {
             $info = $this->procesarMultiple($filas[$i][1]);
-            $fecha = $this->procesarFecha($filas[$i][1]);
             $hash = md5($info['titulo']);
             $plugin->addResult(
-                $info['titulo'],
-                $info['urlPagina'],
-                $info['tamano'],
-                $fecha,
-                $info['urlPagina'],
-                $hash,
-                -1,
-                -1,
-                $info['categoria']
+                    $info['titulo'], $info['urlPagina'], -1, -1, $info['urlPagina'], $hash, -1, -1, "Sin Especificar"
             );
             $res++;
         }
@@ -93,37 +85,28 @@ class SynoDLMSearchDivxatope
     {
         $resInfo = $this->regexp("<a.*href\s*=\s*\"(?<url>.*)\".*>(?<contenido>.*)<\/a>", $fila, true);
         $info = array(
-            'urlPagina' => $this->purl . html_entity_decode($resInfo[0]['url']),
-            'titulo' => trim($resInfo[0]['contenido']),
-            'categoria' => trim($resInfo[1]['contenido']),
-            'tamano' => $resInfo[3]['contenido'] * 1024 * 1024
+            'urlPagina' => $resInfo[0]['url']
         );
+        
+        $titulo = $this->regexp("<img.*alt=\"(.*)\"", $fila, true);
 
+        $info['titulo'] = $titulo[0][1];
         return $info;
-    }
-
-    private function procesarFecha($fila)
-    {
-        $resFecha = $this->regexp("<p.*>(?P<dia>\d+)-(?P<mes>\d+)-(?P<ano>\d+)<\/p>", $fila);
-
-        return "{$resFecha['ano']}-{$resFecha['mes']}-{$resFecha['dia']}";
     }
 
     private function regexp($regexp, $texto, $global = false)
     {
         $res = array();
         if ($global) {
-            if (preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match_all("/$regexp/siU", $texto, $res, PREG_SET_ORDER)) {
+                $res = null;
             }
         } else {
-            if (preg_match("/$regexp/siU", $texto, $res)) {
-                return $res;
-            } else {
-                return '';
+            if (!preg_match("/$regexp/siU", $texto, $res)) {
+                $res = null;
             }
         }
+
+        return $res;
     }
 }

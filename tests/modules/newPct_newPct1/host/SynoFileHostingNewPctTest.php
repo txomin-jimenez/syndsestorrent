@@ -33,7 +33,7 @@ class SynoFileHostingNewPctTest extends \utils\BaseHostTest
     {
         parent::setObject(
             new SynoFileHostingNewPct(
-                "http://www.newpct.com/descargar-serie/cougar-town/capitulo-501/"
+                "http://www.newpct.com/descargar-pelicula/los-olvidados/"
             )
         );
         parent::getDownloadInfo();

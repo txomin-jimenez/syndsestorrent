@@ -23,6 +23,7 @@ CAMBIOS
 -------
 DLM 1.0/HOST 1.0 Versión inicial
 DLM 1.0/HOST 1.0.1 Actualizado conforme cambio en la web
+DLM 1.0.1/HOST 1.0.1 Actualizado conforme cambio en la web (ya no se puede obtener tamaño/categoria/fecha)
 
 LIMITACIONES
 ------------
