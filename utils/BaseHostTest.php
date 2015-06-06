@@ -61,7 +61,6 @@ abstract class BaseHostTest extends \PHPUnit_Framework_TestCase
     {
         $headerSize = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
         $header = substr($res, 0, $headerSize);
-        
         $filename = $this->regexp('Content-Disposition:.*filename=[\'"]?+(.*)[\'";\n\r]', $header);
         
         $ret = false;

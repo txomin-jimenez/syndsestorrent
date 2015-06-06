@@ -73,7 +73,7 @@ class SynoDLMSearchDivxatope
             $info = $this->procesarMultiple($filas[$i][1]);
             $hash = md5($info['titulo']);
             $plugin->addResult(
-                    $info['titulo'], $info['urlPagina'], -1, -1, $info['urlPagina'], $hash, -1, -1, "Sin Especificar"
+                    $info['titulo'], $info['urlPagina'], 0, 'Desconocido', $info['urlPagina'], $hash, -1, -1, "Sin clasificar"
             );
             $res++;
         }

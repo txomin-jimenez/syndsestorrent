@@ -17,14 +17,11 @@
     along with SynDsEsTorrent.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace modules\newPct_newPct1\host;
+namespace modules\newPct1\host;
 
-class SynoFileHostingNewPct
+class SynoFileHostingNewPct1
 {
     private $url;
-
-    const QUERY_URL = 'https://de-free-proxy.cyberghostvpn.com/go/browse.php?u=%s&b=7&f=norefer';
-    const HOST_PROXY = 'https://de-free-proxy.cyberghostvpn.com';
 
     /**
      *
@@ -56,29 +53,22 @@ class SynoFileHostingNewPct
         curl_setopt($curl, CURLOPT_USERAGENT, DOWNLOAD_STATION_USER_AGENT);
         curl_setopt($curl, CURLOPT_HEADER, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_URL, $this->url);
 
-        if ($this->endsWith($this->url, '/dlm/')) {
-            $result[DOWNLOAD_URL] = $this->getTorrentUrlNewpct1($curl);
-        } else {
-            $result[DOWNLOAD_URL] = $this->getTorrentUrlNewpct($curl);
-        }
+        $result[DOWNLOAD_URL] = $this->getTorrentUrlNewpct1($curl);        
 
         return $result;
-    }
-
-    private function endsWith($haystack, $needle)
-    {
-        return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
     }
 
     private function getTorrentUrlNewpct1($curl)
     {
         $result = '';
+
         curl_setopt(
             $curl,
             CURLOPT_URL,
             preg_replace(
-                '/(.*newpct1.com)\/(.*)\/dlm\//siU',
+                '/(.*newpct1.com)\/(.*\/)/siU',
                 '\1/descarga-torrent/\2',
                 $this->url
             )
@@ -91,25 +81,5 @@ class SynoFileHostingNewPct
         }
 
         return $result;
-    }
-
-    private function getTorrentUrlNewpct($curl)
-    {
-        $ret = '';
-        if (strstr($this->url, 'newpct1.com') === false) {
-            curl_setopt($curl, CURLOPT_URL, sprintf(SynoFileHostingNewPct::QUERY_URL, urlencode($this->url)));
-            $res = curl_exec($curl);
-            $resultadoRegex = array();
-            if (preg_match(
-                '/<span.*id=\'content-torrent\'.*>.*<a.*href=\'(.*tumejor.*)\'/siU',
-                $res,
-                $resultadoRegex
-            )
-            ) {
-                $ret = SynoFileHostingNewPct::HOST_PROXY . $resultadoRegex[1];
-            }
-        }
-
-        return $ret;
     }
 }

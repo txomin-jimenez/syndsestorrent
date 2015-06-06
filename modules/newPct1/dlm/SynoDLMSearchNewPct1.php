@@ -119,7 +119,7 @@ class SynoDLMSearchNewPct1
             $tamano = $this->obtenerTamanyo($resultado['tamanyo'], $resultado['tipo_tamanyo']);
             $plugin->addResult(
                 $titulo,
-                $enlacePagina . '/dlm/',
+                $enlacePagina,
                 $tamano,
                 $fecha,
                 $enlacePagina,
