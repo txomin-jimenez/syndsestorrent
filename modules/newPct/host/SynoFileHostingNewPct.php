@@ -47,6 +47,7 @@ class SynoFileHostingNewPct
      */
     public function GetDownloadInfo()
     {
+        $this->logToFile("getDownloadInfo");
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
         //curl_setopt($curl, CURLOPT_VERBOSE, true);
@@ -61,13 +62,21 @@ class SynoFileHostingNewPct
         return $result;
     }
 
+    private function logToFile($log){
+      file_put_contents('/tmp/zzlog_'.date("j.n.Y").'.txt', $log.PHP_EOL, FILE_APPEND);
+    }
 
     private function getTorrentUrlNewpct($curl)
     {
+        $this->logToFile("................");
+        $this->logToFile($this->url);
         $ret = '';
         if (strstr($this->url, 'newpct1.com') === false) {
-            curl_setopt($curl, CURLOPT_URL, sprintf(SynoFileHostingNewPct::QUERY_URL, urlencode($this->url)));
+            //curl_setopt($curl, CURLOPT_URL, sprintf(SynoFileHostingNewPct::QUERY_URL, urlencode($this->url)));
+            curl_setopt($curl, CURLOPT_URL, $this->url);
             $res = curl_exec($curl);
+            $this->logToFile("1");
+            $this->logToFile($res);
             $resultadoRegex = array();
             if (preg_match(
                 '/<span.*id=\'content-torrent\'.*>.*<a.*href=\'(.*tumejor.*)\'/siU',
@@ -75,9 +84,15 @@ class SynoFileHostingNewPct
                 $resultadoRegex
             )
             ) {
-                $ret = SynoFileHostingNewPct::HOST_PROXY . $resultadoRegex[1];
+                $this->logToFile("2");
+                $this->logToFile($resultadoRegex[1]);
+                //$ret = SynoFileHostingNewPct::HOST_PROXY . $resultadoRegex[1];
+                $ret = $resultadoRegex[1];
             }
         }
+
+        $this->logToFile("3");
+        $this->logToFile($ret);
 
         return $ret;
     }

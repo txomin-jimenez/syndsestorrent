@@ -9,3 +9,6 @@ release/
 *.spk
 # Python compilado
 *.pyc
+# vim swap files
+*.sw*
+
